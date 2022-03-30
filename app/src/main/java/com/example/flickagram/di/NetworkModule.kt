@@ -3,6 +3,7 @@ package com.example.flickagram.di
 import com.example.flickagram.BuildConfig
 import com.example.flickagram.data.network.api.PhotosAPI
 import com.example.flickagram.data.network.config.APIService
+import com.example.flickagram.domain.sources.MainSource
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -32,4 +33,6 @@ object NetworkModule {
     fun providePhotosAPI(apiService: APIService) : PhotosAPI {
         return apiService.createAPI(PhotosAPI::class.java)
     }
+
+
 }

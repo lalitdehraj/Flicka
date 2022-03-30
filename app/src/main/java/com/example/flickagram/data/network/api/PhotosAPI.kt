@@ -9,17 +9,12 @@ import retrofit2.http.Query
 interface PhotosAPI {
     @GET("rest/")
     fun getImages(
-        @Query("method") method : String = "flickr.interestingness.getList",
-        @Query("api_key") apiKey : String = BuildConfig.API_KEY,
-        @Query("format") format : String = "json",
-        @Query("per_page") count : Int = 20,
-        @Query("extras") extras : String = "date_taken,url_h",
-        @Query("page") page : Int = 1,
-        @Query("nojsoncallback") no : Int = 1,
+        @Query("method") method: String = "flickr.interestingness.getList",
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+        @Query("format") format: String = "json",
+        @Query("per_page") count: Int = 20,
+        @Query("extras") extras: String = "date_taken,url_h",
+        @Query("page") page: Int = 1,
+        @Query("nojsoncallback") no: Int = 1,
     ) : Call<PhotosBody>
 }
-
-/**
- *      https://www.flickr.com/services/rest/?method=flickr.interestingness.getList&api_key=fd6460fe42e55889ca012a44ed037d60&format=json&per_page=20&extras=date_taken,url_h&page=1&nojsoncallback=1
- *
- * */
