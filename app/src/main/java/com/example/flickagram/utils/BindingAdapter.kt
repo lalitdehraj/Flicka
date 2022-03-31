@@ -11,5 +11,9 @@ import com.example.flickagram.R
 
 @BindingAdapter("loadImage")
 fun loadImageInImageView(imageView: ImageView, url : String?) {
-    Glide.with(imageView).load(url).placeholder(R.drawable.img).error(R.drawable.img).into(imageView)
+    if (url!= null)
+        Glide.with(imageView).load(url).centerCrop().error(R.drawable.img).into(imageView)
+    else
+        Glide.with(imageView).load(R.drawable.img).into(imageView)
+
 }

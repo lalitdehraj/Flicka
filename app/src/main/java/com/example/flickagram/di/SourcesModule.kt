@@ -1,5 +1,6 @@
 package com.example.flickagram.di
 
+import com.example.flickagram.data.database.AppDatabase
 import com.example.flickagram.data.database.dao.PhotosDao
 import com.example.flickagram.data.network.api.PhotosAPI
 import com.example.flickagram.domain.sources.MainSource
@@ -14,8 +15,8 @@ import dagger.hilt.components.SingletonComponent
 object SourcesModule {
 
     @Provides
-    fun provideMainSource(photosAPI: PhotosAPI, photosDao: PhotosDao): MainSource {
-        return MainSource(photosAPI, photosDao)
+    fun provideMainSource(photosAPI: PhotosAPI, appDatabase: AppDatabase): MainSource {
+        return MainSource(photosAPI, appDatabase)
     }
 
 }

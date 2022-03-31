@@ -27,8 +27,4 @@ object DatabaseModule {
         ).build()
     }
 
-    @Provides
-    fun providePhotoDao(appDatabase: AppDatabase): PhotosDao {
-        return appDatabase.getPhotoDao()
-    }
 }

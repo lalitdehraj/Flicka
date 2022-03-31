@@ -16,5 +16,5 @@ interface PhotosDao {
     suspend fun insertPhoto(photos: Photo)
 
     @Query("Select * from PhotosTable")
-    fun getPhotosList(): LiveData<List<Photo>>
+    fun getPhotosList(): Flow<List<Photo>>
 }

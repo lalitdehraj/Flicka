@@ -2,13 +2,13 @@ package com.example.flickagram.ui.home.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.flickagram.domain.model.Photo
 import com.example.flickagram.domain.sources.MainSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -18,9 +18,8 @@ class MainViewModel @Inject constructor(private val mainSource: MainSource) : Vi
     private var page = 1
     private var hasNextPage = true
 
-    private val _photosList = MutableStateFlow<List<Photo>>(ArrayList())
-    val photoList = _photosList.asStateFlow()
-//    val photoList = mainSource.getImages()
+
+    val photoList = mainSource.getImages().stateIn(viewModelScope, SharingStarted.Lazily, ArrayList())
 
     private val _fetchStatus = MutableStateFlow<FetchStatus?>(null)
     val fetchStatus = _fetchStatus.asStateFlow()
@@ -32,38 +31,25 @@ class MainViewModel @Inject constructor(private val mainSource: MainSource) : Vi
                 withContext(Dispatchers.IO) {
                     try {
                         val response = mainSource.getImages(page = page)
-                        if (response.isSuccessful){
-
+                        if (response.isSuccessful) {
                             response.body()?.photos?.let { photos ->
                                 hasNextPage = photos.totalPagesCount > photos.currentPage
                                 page = photos.currentPage + 1
-
-//                                val updatePhotosList = ArrayList<Photo>().apply {
-//                                    addAll(photoList.value)
-//                                    addAll(photos.photoList)
-//                                }
-                                viewModelScope.launch {
-                                    mainSource.storeImages(photos.photoList)
-                                }
-
-//                                _photosList.value = updatePhotosList
+                                photos.photoList.forEach { mainSource.storeImage(it) }
                                 _fetchStatus.value = FetchStatus.SUCCESS
                             }
-
-
-                        }else{
+                        } else {
                             _fetchStatus.value = FetchStatus.FAILURE
                         }
-                    }catch (e : Exception) {
+                    } catch (e: Exception) {
                         _fetchStatus.value = FetchStatus.FAILURE
                     }
                 }
             }
         }
     }
-
-
 }
+
 enum class FetchStatus {
     LOADING,
     SUCCESS,
