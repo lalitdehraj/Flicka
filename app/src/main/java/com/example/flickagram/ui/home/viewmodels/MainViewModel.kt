@@ -6,6 +6,7 @@ import com.example.flickagram.domain.model.Photo
 import com.example.flickagram.domain.sources.MainSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -19,6 +20,7 @@ class MainViewModel @Inject constructor(private val mainSource: MainSource) : Vi
 
     private val _photosList = MutableStateFlow<List<Photo>>(ArrayList())
     val photoList = _photosList.asStateFlow()
+//    val photoList = mainSource.getImages()
 
     private val _fetchStatus = MutableStateFlow<FetchStatus?>(null)
     val fetchStatus = _fetchStatus.asStateFlow()
@@ -36,14 +38,18 @@ class MainViewModel @Inject constructor(private val mainSource: MainSource) : Vi
                                 hasNextPage = photos.totalPagesCount > photos.currentPage
                                 page = photos.currentPage + 1
 
-                                val updatePhotosList = ArrayList<Photo>().apply {
-                                    addAll(photoList.value)
-                                    addAll(photos.photoList)
+//                                val updatePhotosList = ArrayList<Photo>().apply {
+//                                    addAll(photoList.value)
+//                                    addAll(photos.photoList)
+//                                }
+                                viewModelScope.launch {
+                                    mainSource.storeImages(photos.photoList)
                                 }
 
-                                _photosList.value = updatePhotosList
+//                                _photosList.value = updatePhotosList
                                 _fetchStatus.value = FetchStatus.SUCCESS
                             }
+
 
                         }else{
                             _fetchStatus.value = FetchStatus.FAILURE

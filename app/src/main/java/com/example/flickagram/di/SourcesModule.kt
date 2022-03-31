@@ -1,20 +1,21 @@
 package com.example.flickagram.di
 
+import com.example.flickagram.data.database.dao.PhotosDao
 import com.example.flickagram.data.network.api.PhotosAPI
 import com.example.flickagram.domain.sources.MainSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
-@InstallIn(SingletonComponent::class)
+@InstallIn(ActivityComponent::class)
 @Module
 object SourcesModule {
 
     @Provides
-    fun provideMainSource(photosAPI: PhotosAPI): MainSource {
-        return MainSource(photosAPI)
+    fun provideMainSource(photosAPI: PhotosAPI, photosDao: PhotosDao): MainSource {
+        return MainSource(photosAPI, photosDao)
     }
 
 }

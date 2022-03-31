@@ -19,6 +19,7 @@ android {
         multiDexEnabled true
         buildConfigField "String", "BASE_URL", BASE_URL
         buildConfigField "String", "API_KEY", API_KEY
+        buildConfigField "String", "APP_DATABASE", APP_DATABASE
     }
 
     buildTypes {
@@ -66,5 +67,13 @@ dependencies {
     //LifeCycle Coroutine
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha05'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0-alpha05'
+
+    //Room
+//    implementation "androidx.room:room-runtime:2.3.0"
+//    kapt "androidx.room:room-compiler:2.3.0"
+    implementation 'androidx.room:room-ktx:2.4.2'
+    implementation "androidx.room:room-runtime:2.4.2"
+    kapt "androidx.room:room-compiler:2.4.2"
+
 
 }
