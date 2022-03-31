@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/black_500">
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -23,6 +24,7 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:text="@string/photos_are_loading"
         android:id="@+id/empty_list_label"
         app:layout_constraintTop_toTopOf="parent"

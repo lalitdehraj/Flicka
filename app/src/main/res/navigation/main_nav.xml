@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
     app:startDestination="@id/photos">
 
     <fragment
         android:id="@+id/photos"
         android:name="com.example.flickagram.ui.home.photos.Photos"
-        android:label="Photos" />
+        android:label="Photos" >
+        <action
+            android:id="@+id/action_photos_to_details"
+            app:destination="@id/details3" />
+    </fragment>
+    <fragment
+        android:id="@+id/details3"
+        android:name="com.example.flickagram.ui.home.details.Details"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" />
 </navigation>

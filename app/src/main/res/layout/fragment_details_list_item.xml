@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="photoItem"
+            type="com.example.flickagram.domain.model.Photo" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.home.details.DetailsListItem">
+
+        <ImageView
+            android:id="@+id/main_preview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/share_url"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#D826272B"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@string/share_url"
+            android:textAppearance="?textAppearanceBody2"
+            android:textColor="@color/white"
+            app:background="?selectableItemBackgroundBorderless"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/share_image"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/share_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#D825272B"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@string/share_image"
+            android:textAppearance="?textAppearanceBody2"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/share_url" />
+
+        <TextView
+            android:id="@+id/image_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#AF393A3F"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="16dp"
+            android:text="@{photoItem.title}"
+            android:textAppearance="?textAppearanceHeadline6"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/share_url"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="image title" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -10,6 +10,7 @@ import com.example.flickagram.R
 import com.example.flickagram.databinding.FragmentPhotosBinding
 import com.example.flickagram.ui.home.viewmodels.FetchStatus
 import com.example.flickagram.ui.home.viewmodels.MainViewModel
+import com.example.flickagram.utils.safeNavigate
 import com.example.flickagram.utils.view.InfiniteScrollListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -22,8 +23,12 @@ class Photos : Fragment(R.layout.fragment_photos) {
     private lateinit var binding: FragmentPhotosBinding
     private val mainViewModel by activityViewModels<MainViewModel>()
 
-    private val photosAdapter by lazy { PhotosAdapter() }
-    private val linearLayoutManager by lazy { LinearLayoutManager(requireContext()) }
+    private val photosAdapter by lazy {
+        PhotosAdapter(onItemClick = {
+            safeNavigate(R.id.action_photos_to_details, Bundle().apply { putInt("position", it) })
+        })
+    }
+    private lateinit var linearLayoutManager :LinearLayoutManager
     private val infiniteScrollListener by lazy {
         InfiniteScrollListener(linearLayoutManager, work = {
             mainViewModel.getPhotos()
@@ -35,6 +40,7 @@ class Photos : Fragment(R.layout.fragment_photos) {
 
         binding = FragmentPhotosBinding.bind(view)
         binding.lifecycleOwner = this
+        linearLayoutManager= LinearLayoutManager(requireContext())
 
 
         binding.photosList.apply {
